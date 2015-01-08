@@ -1,0 +1,53 @@
+#- name: Make sure the "project_dir" exists
+#  sudo: yes
+#  sudo_user: odoo
+#  file: path=/home/odoo/{{ project_dir }} state=directory
+
+- name: Create Virtualenv
+  sudo: yes
+  sudo_user: odoo
+  command: virtualenv {{ project_dir }} # starting from virtualenv >= 1.9 use --no-setuptools
+  args:
+    chdir: /home/odoo/
+    creates: /home/odoo/{{ project_dir }}
+
+- name: Remove setuptools
+  sudo: yes
+  sudo_user: odoo
+  command: bin/pip uninstall -y setuptools pip
+  args:
+    chdir: /home/odoo/{{ project_dir }}
+    removes: /home/odoo/{{ project_dir }}/bin/pip
+
+- name: Download buildout bootstrap script
+  sudo: yes
+  sudo_user: odoo
+  get_url: url={{ buildout_bootstrap_url }} dest=/home/odoo/{{ project_dir }}/{{ buildout_bootstrap_file }}
+
+- name: Upload buildout.cfg
+  sudo: yes
+  sudo_user: odoo
+  template: src=buildout.j2 dest=/home/odoo/{{ project_dir }}/buildout.cfg 
+
+- name: Bootstrap the buildout
+  sudo: yes
+  sudo_user: odoo
+  command: bin/python /home/odoo/{{ project_dir }}/{{ buildout_bootstrap_file }}
+  args:
+    chdir: /home/odoo/{{ project_dir }}
+
+- name: Execute buildout
+  sudo: yes
+  sudo_user: odoo
+  command: bin/buildout
+  args:
+    chdir: /home/odoo/{{ project_dir }}
+
+- name: Start odoo
+  sudo: yes
+  sudo_user: odoo
+  command: bin/start_openerp
+  args:
+    chdir: /home/odoo/{{ project_dir }}
+
+

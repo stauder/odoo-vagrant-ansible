@@ -1,0 +1,77 @@
+- name: Install packages
+  sudo: yes
+  apt: pkg={{ item }} state=installed update_cache=yes
+  with_items:
+      # git
+      - git
+
+      # Database
+      - postgresql
+      - libpq-dev # Required for Ansible to interact with postgres
+      - python-psycopg2 # Required for Ansible to interact with postgres
+
+      # Python Dev
+      - python-dev
+      - python-setuptools
+      - python-virtualenv
+
+      # packages from
+      # http://apt.anybox.fr/openerp/dists/common/main/binary-amd64/Packages
+      - python
+      - libpq5
+      - libxml2
+      - libxslt1.1
+      - libldap-2.4-2
+      - libsasl2-2
+      - libjpeg62
+      - liblcms1
+      - zlib1g
+      - libfreetype6
+      - libevent-2.0-5
+      - libevent-core-2.0-5
+      - libevent-extra-2.0-5
+      - libyaml-0-2
+      - ttf-dejavu
+      - wkhtmltopdf
+      - graphviz
+
+      # additional packages
+      - libxml2-dev
+      - libxslt-dev
+      - libldap2-dev
+      - libsasl2-dev
+
+- name: Allow password authentication for local socket users
+  sudo: yes
+  copy: src=pg_hba.conf dest=/etc/postgresql/9.1/main/pg_hba.conf force=yes
+
+- name: Ensure Postgres is running with new configuration
+  sudo: yes
+  service: name=postgresql state=restarted
+
+- name: Create Database
+  sudo: yes
+  sudo_user: postgres
+  postgresql_db: name={{ db_name }}
+
+- name: Create Database User
+  sudo: yes
+  sudo_user: postgres
+  postgresql_user: name={{ db_user }} password={{ db_password }} state=present role_attr_flags=NOSUPERUSER,CREATEDB
+
+- name: Provide user with DB permissions
+  sudo: yes
+  sudo_user: postgres
+  postgresql_user: user={{ db_user }} db={{ db_name }} priv=ALL
+
+- name: ensure group "odoo" exists
+  sudo: yes
+  group: name=odoo state=present
+
+- name: ensure user "odoo" exists
+  sudo: yes
+  user: name=odoo home=/home/odoo state=present shell=/bin/bash group=odoo
+
+
+
+

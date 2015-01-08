@@ -1,0 +1,4 @@
+buildout_bootstrap_url: https://raw.github.com/buildout/buildout/master/bootstrap/bootstrap.py
+buildout_bootstrap_file: bootstrap.py
+project_dir: project_dir
+
