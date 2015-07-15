@@ -56,3 +56,5 @@ docs/_build/
 # PyBuilder
 target/
 
+# ansible file
+vagrant_ansible_inventory_default
