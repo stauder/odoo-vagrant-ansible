@@ -41,9 +41,6 @@
       - libldap2-dev
       - libsasl2-dev
 
-      # for downloading odoo
-      - bzr
-
 - name: Allow password authentication for local socket users
   sudo: yes
   copy: src=pg_hba.conf dest=/etc/postgresql/9.1/main/pg_hba.conf force=yes
