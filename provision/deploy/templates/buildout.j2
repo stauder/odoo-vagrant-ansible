@@ -5,7 +5,10 @@ find-links = http://download.gna.org/pychart/
 
 [openerp]
 recipe = anybox.recipe.openerp[bzr]:server
-version = nightly 7.0 latest
+#version = nightly 7.0 latest
+version = bzr lp:openobject-server/7.0 openerp-7.0 last:1 bzr-init=lightweight-checkout
+addons = bzr lp:openobject-addons/7.0 addons-7.0 last:1 bzr-init=lightweight-checkout
+         bzr lp:openerp-web/7.0 addons-web-7.0 last:1 subdir=addons bzr-init=lightweight-checkout
 #version = git https://github.com/odoo/odoo.git openerp-7.0 7.0 depth=1
 #version = bzr lp:openobject-server/7.0 openerp-7.0 last:1 bzr-init=lightweight-checkout
 #addons = local parts/openerp-7.0/addons
@@ -17,7 +20,7 @@ options.db_host = 127.0.0.1
 
 [versions]
 setuptools = 
-zc.buildout = 2.2.1
+zc.buildout = 2.2.2
 zc.recipe.eggs = 2.0.0
 anybox.recipe.openerp = 1.9.0 
 babel = 
