@@ -1,6 +1,10 @@
-- name: Set locale
+- name: Set system locale
   sudo: yes
-  command: /usr/sbin/update-locale LANG=en_US.UTF-8 LC_MESSAGES=POSIX
+  command: /usr/sbin/update-locale LANG=en_US.UTF-8 LC_MESSAGES=POSIX LC_ALL=en_US.UTF-8 LANGUAGE=en_US.UTF-8
+
+- name: Set profile locale
+  sudo: yes
+  command: echo -e 'export LANGUAGE="en_US.UTF-8"\nexport LANG="en_US.UTF-8"\nexport LC_ALL="en_US.UTF-8"' | sudo tee /etc/profile.d/userlocales.sh
 
 - name: Install packages
   sudo: yes
