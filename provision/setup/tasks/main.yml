@@ -1,3 +1,7 @@
+- name: Set locale
+  sudo: yes
+  command: /usr/sbin/update-locale LANG=en_US.UTF-8 LC_MESSAGES=POSIX
+
 - name: Install packages
   sudo: yes
   apt: pkg={{ item }} state=installed update_cache=yes
@@ -40,6 +44,7 @@
       - libxslt-dev
       - libldap2-dev
       - libsasl2-dev
+      - libjpeg-dev
 
 - name: Allow password authentication for local socket users
   sudo: yes

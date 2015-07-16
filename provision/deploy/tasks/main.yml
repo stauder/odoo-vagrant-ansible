@@ -46,7 +46,7 @@
 - name: Start odoo
   sudo: yes
   sudo_user: odoo
-  command: bin/start_openerp
+  command: bin/start_openerp -c /home/odoo/{{ project_dir }}/etc/openerp.cfg
   args:
     chdir: /home/odoo/{{ project_dir }}
 
