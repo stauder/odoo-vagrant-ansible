@@ -61,12 +61,17 @@
 - name: Create Database
   sudo: yes
   sudo_user: postgres
-  postgresql_db: name={{ db_name }}
+  postgresql_db: name={{ db_name }} template=template0 encoding=UTF-8 lc_collate=en_US.UTF-8 lc_ctype=en_US.UTF-8
 
 - name: Create Database User
   sudo: yes
   sudo_user: postgres
   postgresql_user: db={{ db_name }} name={{ db_user }} password={{ db_password }} state=present role_attr_flags=NOSUPERUSER,CREATEDB priv=ALL
+
+- name: Own Database to our User
+  sudo: yes
+  sudo_user: postgres
+  postgresql_db: name={{ db_name }} owner={{ db_name }}
 
 - name: ensure group "odoo" exists
   sudo: yes
