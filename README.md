@@ -13,7 +13,6 @@ sudo apt-get install ansible
 ## Tasks to start the virtual machine
 ```bash
 git clone git://github.com/stauder/odoo-vagrant-ansible.git
-mkdir data
 vagrant up
 ```
 
