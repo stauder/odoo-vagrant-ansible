@@ -43,17 +43,10 @@
   args:
     chdir: /home/odoo/{{ project_dir }}
 
-- name: Set DB Template
-  sudo: yes
-  sudo_user: odoo
-  command: sed -i 's/template1/template0/g' /home/odoo/{{ project_dir }}/etc/openerp.cfg
-  args:
-    chdir: /home/odoo/{{ project_dir }}
-
 - name: Start odoo
   sudo: yes
   sudo_user: odoo
-  command: bin/start_openerp -c /home/odoo/{{ project_dir }}/etc/openerp.cfg
+  command: bin/start_openerp
   args:
     chdir: /home/odoo/{{ project_dir }}
 
