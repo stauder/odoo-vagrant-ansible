@@ -58,12 +58,12 @@
 - name: Create Database User
   sudo: yes
   sudo_user: postgres
-  postgresql_user: name={{ db_user }} password={{ db_password }} state=present role_attr_flags=NOSUPERUSER,CREATEDB
+  postgresql_user: db={{ db_name }} name={{ db_user }} password={{ db_password }} state=present role_attr_flags=NOSUPERUSER,CREATEDB priv=ALL
 
-- name: Provide user with DB permissions
+- name: Own DB to user
   sudo: yes
   sudo_user: postgres
-  postgresql_db: name={{ db_name }} owner={{ db_name }} priv=ALL
+  postgresql_db: name={{ db_name }} owner={{ db_name }}
 
 - name: ensure group "odoo" exists
   sudo: yes
