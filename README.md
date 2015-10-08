@@ -10,15 +10,9 @@ sudo apt-get update
 sudo apt-get install ansible
 ```
 
-## Download vagrant box
-```bash
-vagrant box add precise32 http://files.vagrantup.com/precise32.box
-```
-
 ## Tasks to start the virtual machine
 ```bash
 git clone git://github.com/stauder/odoo-vagrant-ansible.git
-mkdir data
 vagrant up
 ```
 
